@@ -1,0 +1,13 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "my-policy"
+  namespace: "admin"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: monitoring
+  egress:
+    - toEntities:
+      - host
+      - remote-node

@@ -1,0 +1,13 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "backend-to-db"
+  namespace: "prod"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: db
+  ingress:
+    - fromEndpoints:
+      - matchLabels:
+          role: backend

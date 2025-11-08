@@ -1,0 +1,19 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "ingress-frontend"
+  namespace: "staging"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: backend
+  ingress:
+    - fromEndpoints:
+      - matchLabels:
+          role: frontend
+        matchExpressions:
+          - key: "k8s:io.kubernetes.pod.namespace"
+            operator: "In"
+            values:
+            - "prod"
+            - "staging"

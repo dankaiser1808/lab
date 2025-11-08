@@ -1,0 +1,26 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "my-policy"
+  namespace: "prod"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: user
+  ingress:
+  - fromEndpoints:
+    - matchLabels: {}
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      rules:
+        http:
+        - method: "GET"
+          path: "/users"
+        - method: "POST"
+          path: "/users"
+        - method: "PATCH"
+          path: "/users"
+        - method: "GET"
+          path: "/auth/token"

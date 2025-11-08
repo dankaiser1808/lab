@@ -1,0 +1,19 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "orders-egress-to-inventory-products"
+  namespace: "prod"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: orders
+  egress:
+    - toEndpoints:
+      - matchLabels:
+          role: inventory
+      - matchLabels:
+          role: products
+      toPorts:
+        - ports:
+           - port: "3000"
+             protocol: TCP

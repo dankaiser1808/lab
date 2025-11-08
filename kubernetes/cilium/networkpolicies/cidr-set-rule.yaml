@@ -1,0 +1,24 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cidr-rule
+  namespace: prod
+spec:
+  endpointSelector:
+    matchLabels:
+      role: payment
+  egress:
+  - toCIDR:
+    - 200.100.17.1/32
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  - toCIDRSet:
+    - cidr: 100.10.0.0/24
+      except:
+      - "100.10.0.50/32"
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP

@@ -1,0 +1,25 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "admin-egress-policy"
+  namespace: "admin"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: admin
+      k8s:io.kubernetes.pod.namespace: admin
+  egress:
+    - toEndpoints:
+      - matchLabels:
+          role: user
+      toPorts:
+        - ports:
+           - port: "4000"
+             protocol: TCP
+    - toEndpoints:
+      - matchLabels:
+          role: products
+      toPorts:
+        - ports:
+           - port: "5000"
+             protocol: TCP
